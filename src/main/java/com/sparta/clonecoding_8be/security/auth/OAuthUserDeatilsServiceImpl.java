@@ -50,10 +50,10 @@ public class OAuthUserDeatilsServiceImpl extends DefaultOAuth2UserService {
             System.out.println("구글과 카카오톡, 네이버 아님!");
         }
 
-        String provider = oAuth2UserInfo.getProvider(); //google,facebook
+        String provider = oAuth2UserInfo.getProvider(); //google,naver
         String password = passwordEncoder.encode("당근마켓클론");
         UserRole userRole = UserRole.USER;
-        String nickname = oAuth2UserInfo.getName();
+        String nickname = oAuth2UserInfo.getNickname();
         String email = oAuth2UserInfo.getEmail();
         String profileImg = oAuth2UserInfo.getProfileImg();
 

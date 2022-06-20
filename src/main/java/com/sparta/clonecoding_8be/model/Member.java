@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -37,8 +36,8 @@ public class Member extends Timestamped {
     @Column
     private String profileImage;
 
-//    @Column
-//    private String address;
+    @Column(nullable = false)
+    private String address;
 
 
     public Member(String username, String nickname, String password, UserRole userRole) {
@@ -58,9 +57,10 @@ public class Member extends Timestamped {
     }
 
     @Builder
-    public Member(String username, String password, UserRole userRole, String nickname) {
+    public Member(String username, String password, UserRole userRole, String nickname, String address) {
         this.username = username;
         this.password = password;
+        this.address = address;
         this.userRole = userRole;
         this.nickname = nickname;
     }

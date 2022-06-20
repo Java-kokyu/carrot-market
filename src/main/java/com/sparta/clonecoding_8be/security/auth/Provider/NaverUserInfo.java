@@ -29,7 +29,7 @@ public class NaverUserInfo implements OAuth2UserInfo{
     }
 
     @Override
-    public String getName() {
+    public String getNickname() {
         //nickname: 네이버 닉네임 name: 사용자 이름
         return (String) attributes.get("nickname");
     }
