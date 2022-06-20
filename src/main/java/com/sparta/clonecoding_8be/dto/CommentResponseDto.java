@@ -2,12 +2,13 @@ package com.sparta.clonecoding_8be.dto;
 
 import com.sparta.clonecoding_8be.model.Comment;
 import com.sparta.clonecoding_8be.model.Member;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public class CommentResponseDto {
     private Long commentID;
