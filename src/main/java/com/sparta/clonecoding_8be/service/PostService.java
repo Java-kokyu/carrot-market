@@ -1,6 +1,7 @@
 package com.sparta.clonecoding_8be.service;
 
 import com.sparta.clonecoding_8be.dto.*;
+import com.sparta.clonecoding_8be.model.Comment;
 import com.sparta.clonecoding_8be.model.Post;
 import com.sparta.clonecoding_8be.model.Member;
 import com.sparta.clonecoding_8be.postimg.S3Uploader;
@@ -24,7 +25,6 @@ public class PostService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
     private final S3Uploader s3Uploader;
-
     private final CommentRepository commentRepository;
 
 
@@ -93,7 +93,7 @@ public class PostService {
     }
 
     // Post 수정
-//    public void editPost(Long id, EditPostRequestDto requestDto, String Username){
+//    public vopostID editPost(Long id, EditPostRequestDto requestDto, String Username){
 //        Post post = postRepository.findById(id).orElseThrow(
 //                () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
 //        );
@@ -110,6 +110,7 @@ public class PostService {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
         );
+        commentRepository.deleteByPostId(id);
         if(post.getMember().getUsername().equals(Username)){
             postRepository.deleteById(id);
             return "게시글이 삭제되었습니다.";
