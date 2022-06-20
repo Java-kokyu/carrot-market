@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class PostDetailResponseDto extends Timestamped {
-    private Long id;
+    private Long postID;
     private String username;
     private String nickname;
     private String title;
@@ -31,7 +31,7 @@ public class PostDetailResponseDto extends Timestamped {
 
 
     public PostDetailResponseDto(Post post){
-        this.id = post.getId();
+        this.postID = post.getId();
         this.username = post.getMember().getUsername();
         this.nickname = post.getMember().getNickname();
         this.title = post.getTitle();

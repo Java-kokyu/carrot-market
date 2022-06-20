@@ -59,9 +59,20 @@ public class Post extends Timestamped {
         this.member = member;
     }
 
-    public void editPost(EditPostRequestDto editPostRequestDto){
-        this.title = editPostRequestDto.getTitle();
-        this.price = editPostRequestDto.getPrice();
-        this.content = editPostRequestDto.getContents();
+    public Post(EditPostRequestDto editpostRequestDto, Member member, String imagefile){
+//        this.id = editpostRequestDto.getPostId();
+        this.title = editpostRequestDto.getTitle();
+        this.price = editpostRequestDto.getPrice();
+        this.content = editpostRequestDto.getContent();
+        this.imagefile = imagefile;
+        this.address = editpostRequestDto.getAddress();
+        this.member = member;
     }
+
+
+//    public void editPost(EditPostRequestDto editPostRequestDto){
+//        this.title = editPostRequestDto.getTitle();
+//        this.price = editPostRequestDto.getPrice();
+//        this.content = editPostRequestDto.getContent();
+//    }
 }

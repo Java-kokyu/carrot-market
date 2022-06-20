@@ -1,9 +1,6 @@
 package com.sparta.clonecoding_8be.controller;
 
-import com.sparta.clonecoding_8be.dto.EditPostRequestDto;
-import com.sparta.clonecoding_8be.dto.PostDetailResponseDto;
-import com.sparta.clonecoding_8be.dto.PostRequestDto;
-import com.sparta.clonecoding_8be.dto.PostResponseDto;
+import com.sparta.clonecoding_8be.dto.*;
 import com.sparta.clonecoding_8be.model.Post;
 import com.sparta.clonecoding_8be.repository.PostRepository;
 import com.sparta.clonecoding_8be.service.PostService;
@@ -52,13 +49,25 @@ public class PostController {
 
     // Post 수정
     @PutMapping("/api/posts/{postID}")
-    public void editPost(@PathVariable Long postID,
-                        @RequestBody EditPostRequestDto requestDto){
+    public EditPostRequestDto editPost (@PathVariable Long postID,
+                                         @RequestPart(value = "file",required = false)
+                                            MultipartFile multipartFile,
+                                        @RequestPart(value = "contents")
+                                        EditPostRequestDto requestDto) throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User principal=(User) authentication.getPrincipal();
         String username = principal.getUsername();
-        postService.editPost(postID, requestDto, username);
+
+        return postService.editPost(postID,multipartFile,requestDto,username);
+
     }
+//    public void editPost(@PathVariable Long postID,
+//                        @RequestBody EditPostRequestDto requestDto){
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        User principal=(User) authentication.getPrincipal();
+//        String username = principal.getUsername();
+//        postService.editPost(postID, requestDto, username);
+//    }
 
     // Post 삭제
     @DeleteMapping("/api/posts/{postID}")
