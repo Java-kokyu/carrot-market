@@ -22,7 +22,7 @@ public class CommentController {
 
     //댓글 생성
     @PostMapping("/api/posts/{postID}/comments")
-    public ResponseEntity<Void> registComment(@PathVariable Long postID,
+    public ResponseEntity<CommentRequestDto> registComment(@PathVariable Long postID,
                                               @RequestBody CommentRequestDto commentRequestDto){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User principal = (User) authentication.getPrincipal();
