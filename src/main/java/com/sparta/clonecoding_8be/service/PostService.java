@@ -1,6 +1,4 @@
-PostService.java
-
-        package com.sparta.clonecoding_8be.service;
+package com.sparta.clonecoding_8be.service;
 
 import com.sparta.clonecoding_8be.dto.*;
 import com.sparta.clonecoding_8be.model.Post;
@@ -50,7 +48,7 @@ public class PostService {
         return new PostDetailResponseDto(post);
     }
 
-
+    @Transactional(readOnly = true)
     //    // Post 전체 조회 Conroller 단에서 해결
     public List<PostResponseDto> getAllPosts() {
         List<Post> postList = postRepository.findAll();
@@ -73,7 +71,7 @@ public class PostService {
         return postResponseDtoList;
     }
 
-
+    @Transactional
     public EditPostRequestDto editPost(Long id, MultipartFile multipartFile,
                                        EditPostRequestDto postRequestDto, String username) throws IOException {
         Member member = memberRepository.findByUsername(username).orElseThrow(
@@ -104,8 +102,8 @@ public class PostService {
 //        postRepository.save(post);
 //
 //    }
-
     // Post 삭제
+    @Transactional
     public String deletePost(Long id, String Username){
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
