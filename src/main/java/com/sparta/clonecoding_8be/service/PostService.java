@@ -4,13 +4,11 @@ import com.sparta.clonecoding_8be.dto.*;
 import com.sparta.clonecoding_8be.model.Post;
 import com.sparta.clonecoding_8be.model.Member;
 import com.sparta.clonecoding_8be.postimg.S3Uploader;
-import com.sparta.clonecoding_8be.repository.CommentRepository;
 import com.sparta.clonecoding_8be.repository.MemberRepository;
 import com.sparta.clonecoding_8be.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -29,7 +27,7 @@ public class PostService {
 
     // Post 저장
     @Transactional
-    public PostDetailResponseDto createPosts (MultipartFile multipartFile, PostRequestDto postRequestDto, String username) throws IOException {
+    public PostDetailResponseDto createPosts(MultipartFile multipartFile, PostRequestDto postRequestDto, String username) throws IOException {
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("해당 ID의 회원이 존재하지 않습니다.")
         );
@@ -42,7 +40,7 @@ public class PostService {
     }
 
     // Post 상세 조회
-    public PostDetailResponseDto getPostDetail(Long id){
+    public PostDetailResponseDto getPostDetail(Long id) {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
         );
@@ -51,11 +49,11 @@ public class PostService {
     }
 
 
-//    // Post 전체 조회 Conroller 단에서 해결
-    public List<PostResponseDto> getAllPosts(){
+    //    // Post 전체 조회 Conroller 단에서 해결
+    public List<PostResponseDto> getAllPosts() {
         List<Post> postList = postRepository.findAll();
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
-        for(Post post : postList){
+        for (Post post : postList) {
             postResponseDtoList.add(new PostResponseDto(
                     post.getId(),
                     post.getMember().getUsername(),
@@ -74,18 +72,37 @@ public class PostService {
     }
 
 
-    // Post 수정
-    public void editPost(Long id, EditPostRequestDto requestDto, String Username){
+    public EditPostRequestDto editPost(Long id, MultipartFile multipartFile,
+                                       EditPostRequestDto postRequestDto, String username) throws IOException {
+        Member member = memberRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("해당 ID의 회원이 존재하지 않습니다.")
+        );
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
         );
-        if(!Objects.equals(Username, post.getMember().getUsername())){
+        if(!Objects.equals(username, post.getMember().getUsername())){
             throw new IllegalArgumentException("본인이 작성한 글만 수정이 가능합니다.");
         }
-        post.editPost(requestDto);
-        postRepository.save(post);
+        String urlHttps = s3Uploader.upload(multipartFile, "static");
+        String urlHttp = "http" + urlHttps.substring(5);
+        Post post2 = new Post(postRequestDto, member, urlHttp);
+        postRepository.save(post2);
 
+        return new EditPostRequestDto(post2);
     }
+
+    // Post 수정
+//    public void editPost(Long id, EditPostRequestDto requestDto, String Username){
+//        Post post = postRepository.findById(id).orElseThrow(
+//                () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
+//        );
+//        if(!Objects.equals(Username, post.getMember().getUsername())){
+//            throw new IllegalArgumentException("본인이 작성한 글만 수정이 가능합니다.");
+//        }
+//        post.editPost(requestDto);
+//        postRepository.save(post);
+//
+//    }
 
     // Post 삭제
     public String deletePost(Long id, String Username){
