@@ -1,0 +1,17 @@
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIASHWGT3SYYCMHPF4M
+      secretKey: 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
+    s3:
+      bucket: clone-project.minji6119
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
