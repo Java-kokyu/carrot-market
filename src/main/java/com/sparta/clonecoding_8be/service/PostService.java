@@ -52,7 +52,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<PostResponseDto> getAllPosts() {
-        List<Post> postList = postRepository.findAll();
+        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
         for (Post post : postList) {
             int commentCnt = commentRepository.findAllByPostId(post.getId()).size();
