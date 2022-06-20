@@ -36,7 +36,7 @@ public class CommentService {
     }
 
     //댓글 조회
-    @Transactional(readOnly = true)
+    @Transactional
     public List<CommentResponseDto> getCommentsByPostId(Long postid) {
         List<Comment> commentListByPostId =  commentRepository.findAllByPostId(postid);
 
@@ -50,6 +50,7 @@ public class CommentService {
     }
 
     //댓글 삭제
+    @Transactional
     public Boolean deleteComment(Long id, String member) {
         Comment commentByCommentId = commentRepository.findById(id).get();
         if (!Objects.equals(member, commentByCommentId.getMember().getUsername())) {
@@ -62,6 +63,7 @@ public class CommentService {
 
 
     // 댓글 수정
+    @Transactional
     public Boolean updateComment(Long id, EditCommentRequestDto editCommentRequestDto, String member) {
         Comment comment = commentRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 댓글입니다.")

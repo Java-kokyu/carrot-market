@@ -3,11 +3,13 @@ package com.sparta.clonecoding_8be.controller;
 import com.sparta.clonecoding_8be.dto.CommentRequestDto;
 import com.sparta.clonecoding_8be.dto.CommentResponseDto;
 import com.sparta.clonecoding_8be.dto.EditCommentRequestDto;
+import com.sparta.clonecoding_8be.model.Member;
 import com.sparta.clonecoding_8be.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.userdetails.User;
 

@@ -1,5 +1,6 @@
 package com.sparta.clonecoding_8be.repository;
 
+import com.sparta.clonecoding_8be.dto.PostResponseDto;
 import com.sparta.clonecoding_8be.model.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 

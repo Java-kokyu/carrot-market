@@ -10,18 +10,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 public class CommentResponseDto {
-    private Long comentID;
+    private Long commentID;
     private String comment;
     private String nickname;
 
     private String profileImage;
     private LocalDateTime modifiedAtComment;
 
-    public CommentResponseDto(Comment comment, Member member) {
-        this.comentID = comment.getId();
+    public CommentResponseDto(Comment comment) {
+        this.commentID = comment.getId();
         this.comment = comment.getComment();
-        this.nickname = member.getNickname();
-        this.profileImage = member.getProfileImage();
+        this.nickname = comment.getMember().getNickname();
+        this.profileImage = comment.getMember().getProfileImage();
         this.modifiedAtComment = comment.getModifiedAt();
     }
 }
