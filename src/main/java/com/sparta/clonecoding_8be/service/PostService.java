@@ -4,6 +4,7 @@ import com.sparta.clonecoding_8be.dto.*;
 import com.sparta.clonecoding_8be.model.Post;
 import com.sparta.clonecoding_8be.model.Member;
 import com.sparta.clonecoding_8be.postimg.S3Uploader;
+import com.sparta.clonecoding_8be.repository.CommentRepository;
 import com.sparta.clonecoding_8be.repository.MemberRepository;
 import com.sparta.clonecoding_8be.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,8 @@ public class PostService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
     private final S3Uploader s3Uploader;
+
+    private final CommentRepository commentRepository;
 
 
     // Post 저장
@@ -44,44 +47,31 @@ public class PostService {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
         );
-
         return new PostDetailResponseDto(post);
     }
 
-    @Transactional
-    public List<PostResponseDto> getAllPosts(){
-        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
+    @Transactional(readOnly = true)
+    public List<PostResponseDto> getAllPosts() {
+        List<Post> postList = postRepository.findAll();
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
-        for(Post post : postList){
-            PostResponseDto postResponseDto = new PostResponseDto(post);
-            postResponseDtoList.add(postResponseDto);
+        for (Post post : postList) {
+            int commentCnt = commentRepository.findAllByPostId(post.getId()).size();
+            postResponseDtoList.add(new PostResponseDto(
+                    post.getId(),
+                    post.getMember().getUsername(),
+                    post.getMember().getNickname(),
+                    post.getMember().getProfileImage(),
+                    post.getTitle(),
+                    post.getPrice(),
+                    post.getContent(),
+                    post.getImagefile(),
+                    post.getAddress(),
+                    post.getModifiedAt(),
+                    commentCnt
+            ));
         }
         return postResponseDtoList;
     }
-
-//    @Transactional
-//    public List<PostResponseDto> getAllPosts() {
-//        List<Post> postList = postRepository.findAll();
-//        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
-//        for (Post post : postList) {
-//            postResponseDtoList.add(new PostResponseDto(
-//                    post.getId(),
-//                    post.getMember().getUsername(),
-//                    post.getMember().getNickname(),
-//                    post.getMember().getProfileImage(),
-//                    post.getTitle(),
-//                    post.getPrice(),
-//                    post.getContent(),
-//                    post.getImagefile(),
-//                    post.getAddress(),
-//                    post.getModifiedAt(),
-//                    post.getCommentList().size()
-//            ));
-//        }
-//        return postResponseDtoList;
-//    }
-
-
 
     @Transactional
     public EditPostRequestDto editPost(Long id, MultipartFile multipartFile,

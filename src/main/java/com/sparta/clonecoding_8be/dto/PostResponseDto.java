@@ -29,19 +29,18 @@ public class PostResponseDto extends Timestamped {
     private LocalDateTime modifiedAt;
     private int commentCnt;
 
-    public PostResponseDto(Post post) {
-        this.postID = post.getId();
-        this.username = post.getMember().getUsername();
-        this.nickname = post.getMember().getNickname();
-        this.profileImage = post.getMember().getProfileImage();
-        this.title = post.getTitle();
-        this.price = post.getPrice();
-        this.content = post.getContent();
-        this.imagefile = post.getImagefile();
-        this.address = post.getAddress();
-        this.modifiedAt = post.getModifiedAt();
-        this.commentCnt = post.getCommentList().size();
-    }
+//    public PostResponseDto(Post post) {
+//        this.postID = post.getId();
+//        this.username = post.getMember().getUsername();
+//        this.nickname = post.getMember().getNickname();
+//        this.profileImage = post.getMember().getProfileImage();
+//        this.title = post.getTitle();
+//        this.price = post.getPrice();
+//        this.content = post.getContent();
+//        this.imagefile = post.getImagefile();
+//        this.address = post.getAddress();
+//        this.modifiedAt = post.getModifiedAt();
+//    }
 
 
     //좋아요 한 사람들의 아이디 리스트는?

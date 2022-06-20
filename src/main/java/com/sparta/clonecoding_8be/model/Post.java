@@ -45,9 +45,6 @@ public class Post extends Timestamped {
     @JoinColumn // 다른 model과 연결하겠다
     private Member member;
 
-    @OneToMany
-    @JoinColumn
-    private List<Comment> commentList;
 
 
     public Post (PostRequestDto postRequestDto, Member member, String imagefile){
