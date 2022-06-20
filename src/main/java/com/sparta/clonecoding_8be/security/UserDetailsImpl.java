@@ -40,6 +40,10 @@ public class UserDetailsImpl implements UserDetails, OAuth2User {
 //    }
 
 //    @Override
+
+    public String getProfileImg(){
+        return member.getProfileImage();
+    };
     public String getNickname() {return member.getNickname();}
 
     @Override
