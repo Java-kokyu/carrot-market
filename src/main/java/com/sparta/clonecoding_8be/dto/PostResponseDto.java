@@ -23,7 +23,7 @@ public class PostResponseDto extends Timestamped {
     private String profileImage;
     private String title;
     private Long price;
-    private String contents;
+    private String content;
     private String imagefile;
     private String address;
     private LocalDateTime modifiedAt;
