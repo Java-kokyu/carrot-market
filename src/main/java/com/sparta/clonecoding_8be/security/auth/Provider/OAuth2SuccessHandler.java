@@ -46,7 +46,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         refreshTokenRepository.save(refreshToken);
 
         // 5. 토큰 발급
-        targetUrl = UriComponentsBuilder.fromUriString("http://carrotmarket.s3-website.ap-northeast-2.amazonaws.com/oauth")
+        targetUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/oauth")
                 .queryParam("Authorization", tokenDto.getAccessToken())
                 .queryParam("username", userDetails.getUsername())
                 .queryParam("nickname", userDetails.getNickname())
