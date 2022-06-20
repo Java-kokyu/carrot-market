@@ -9,21 +9,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class EditPostRequestDto {
-//    private Long postId;
     private String title;
     private Long price;
     private String content;
     private String address;
-    private String imagefile;
-//    private String imagefile;
+
 
     public EditPostRequestDto(Post post) {
-//        this.postId = post.getId();
         this.title = post.getTitle();
         this.price = post.getPrice();
         this.content = post.getContent();
-//        this.imagefile = post.getImagefile();
         this.address = post.getAddress();
-        this.imagefile = post.getMember().getProfileImage();
     }
 }

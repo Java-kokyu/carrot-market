@@ -1,4 +1,6 @@
-package com.sparta.clonecoding_8be.service;
+PostService.java
+
+        package com.sparta.clonecoding_8be.service;
 
 import com.sparta.clonecoding_8be.dto.*;
 import com.sparta.clonecoding_8be.model.Post;
@@ -85,10 +87,9 @@ public class PostService {
         }
         String urlHttps = s3Uploader.upload(multipartFile, "static");
         String urlHttp = "http" + urlHttps.substring(5);
-        Post post2 = new Post(postRequestDto, member, urlHttp);
-        postRepository.save(post2);
+        post.update(postRequestDto, urlHttp);
 
-        return new EditPostRequestDto(post2);
+        return postRequestDto  ;
     }
 
     // Post 수정
