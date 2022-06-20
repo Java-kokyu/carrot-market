@@ -14,6 +14,7 @@ public class EditPostRequestDto {
     private Long price;
     private String content;
     private String address;
+    private String imagefile;
 //    private String imagefile;
 
     public EditPostRequestDto(Post post) {
@@ -23,5 +24,6 @@ public class EditPostRequestDto {
         this.content = post.getContent();
 //        this.imagefile = post.getImagefile();
         this.address = post.getAddress();
+        this.imagefile = post.getMember().getProfileImage();
     }
 }
