@@ -80,8 +80,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(successHandler)
                 .userInfoEndpoint()
                 .userService(oAuthUserDeatilsService);
-
-
     }
 
     @Bean

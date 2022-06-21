@@ -26,14 +26,14 @@ public class PostService {
     private final ImagePathRepository imagePathRepository;
     private final S3Uploader s3Uploader;
     private final CommentRepository commentRepository;
-
     private final LikeRepository likeRepository;
 
 
     // Post 저장
-    // Post 저장
     @Transactional
-    public PostDetailResponseDto createPosts(List<MultipartFile> multipartFileList, PostRequestDto postRequestDto, String username) throws IOException {
+    public PostDetailResponseDto createPosts(List<MultipartFile> multipartFileList,
+                                             PostRequestDto postRequestDto,
+                                             String username) throws IOException {
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("해당 ID의 회원이 존재하지 않습니다.")
         );
@@ -52,7 +52,7 @@ public class PostService {
         return new PostDetailResponseDto(post, imagePathList);
     }
 
-
+    // Post 상세조회
     public PostDetailResponseDto getPostDetail(Long id) {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
@@ -64,7 +64,6 @@ public class PostService {
         for(Imagefile imagefile : imagefilesEntity){
             imagefiles.add(imagefile.getImagefile());
         }
-
         return new PostDetailResponseDto(post, imagefiles);
     }
 
@@ -73,15 +72,19 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostResponseDto> getAllPosts() {
         List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
-        List<String> imagefiles = new ArrayList<>();
+
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
         for (Post post : postList) {
             int commentCnt = commentRepository.findAllByPostId(post.getId()).size();
+            List<String> imagefiles = new ArrayList<>();
+
             List<Imagefile> imagefilesEntity = imagePathRepository.findByPost(post);
             for(Imagefile imagefile : imagefilesEntity){
                 imagefiles.add(imagefile.getImagefile());
             }
+
             int likeCnt = likeRepository.findAllByPost(post).size();
+
             postResponseDtoList.add(new PostResponseDto(
                     post.getId(),
                     post.getMember().getUsername(),
@@ -100,6 +103,7 @@ public class PostService {
         return postResponseDtoList;
     }
 
+    // Post 수정
     @Transactional
     public EditPostRequestDto editPost(Long id, MultipartFile multipartFile,
                                        EditPostRequestDto postRequestDto, String username) throws IOException {
@@ -116,21 +120,10 @@ public class PostService {
         String urlHttp = "http" + urlHttps.substring(5);
         post.update(postRequestDto);
 
-        return postRequestDto  ;
+        return postRequestDto;
     }
 
-    // Post 수정
-//    public vopostID editPost(Long id, EditPostRequestDto requestDto, String Username){
-//        Post post = postRepository.findById(id).orElseThrow(
-//                () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
-//        );
-//        if(!Objects.equals(Username, post.getMember().getUsername())){
-//            throw new IllegalArgumentException("본인이 작성한 글만 수정이 가능합니다.");
-//        }
-//        post.editPost(requestDto);
-//        postRepository.save(post);
-//
-//    }
+
     // Post 삭제
     @Transactional
     public String deletePost(Long id, String Username){
