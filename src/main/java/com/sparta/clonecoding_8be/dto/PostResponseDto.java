@@ -28,6 +28,7 @@ public class PostResponseDto extends Timestamped {
     private String address;
     private LocalDateTime modifiedAt;
     private int commentCnt;
+    private int likeCnt;
 
 //    public PostResponseDto(Post post) {
 //        this.postID = post.getId();

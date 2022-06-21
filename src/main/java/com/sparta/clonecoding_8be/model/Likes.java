@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-public class Like {
+public class Likes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,7 +24,7 @@ public class Like {
     private Member member;
 
 
-    public Like(Member member, Post post){
+    public Likes(Member member, Post post){
         this.member = member;
         this.post = post;
     }

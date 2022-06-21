@@ -6,6 +6,7 @@ import com.sparta.clonecoding_8be.model.Post;
 import com.sparta.clonecoding_8be.model.Member;
 import com.sparta.clonecoding_8be.postimg.S3Uploader;
 import com.sparta.clonecoding_8be.repository.CommentRepository;
+import com.sparta.clonecoding_8be.repository.LikeRepository;
 import com.sparta.clonecoding_8be.repository.MemberRepository;
 import com.sparta.clonecoding_8be.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,8 @@ public class PostService {
     private final MemberRepository memberRepository;
     private final S3Uploader s3Uploader;
     private final CommentRepository commentRepository;
+
+    private final LikeRepository likeRepository;
 
 
     // Post 저장
@@ -67,6 +70,7 @@ public class PostService {
                     post.getImagefile(),
                     post.getAddress(),
                     post.getModifiedAt(),
+                    post.getLikeCnt(),
                     commentCnt
             ));
         }
