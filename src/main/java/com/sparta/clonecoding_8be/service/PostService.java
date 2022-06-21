@@ -25,15 +25,14 @@ public class PostService {
     private final ImagePathRepository imagePathRepository;
     private final S3Uploader s3Uploader;
     private final CommentRepository commentRepository;
+
     private final LikeRepository likeRepository;
 
 
     // Post 저장
     // Post 저장
     @Transactional
-    public PostDetailResponseDto createPosts(List<MultipartFile> multipartFileList,
-                                             PostRequestDto postRequestDto,
-                                             String username) throws IOException {
+    public PostDetailResponseDto createPosts(List<MultipartFile> multipartFileList, PostRequestDto postRequestDto, String username) throws IOException {
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("해당 ID의 회원이 존재하지 않습니다.")
         );
@@ -52,8 +51,8 @@ public class PostService {
         return new PostDetailResponseDto(post, imagePathList);
     }
 
-    // Post 상세조회
 
+    // 상세 조회
     public PostDetailResponseDto getPostDetail(Long id) {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
@@ -70,7 +69,6 @@ public class PostService {
         }
 
         return new PostDetailResponseDto(post, imagefiles, commentCnt, likeCnt);
-
     }
 
 
@@ -83,14 +81,11 @@ public class PostService {
         for (Post post : postList) {
             int commentCnt = commentRepository.findAllByPostId(post.getId()).size();
             List<String> imagefiles = new ArrayList<>();
-
             List<Imagefile> imagefilesEntity = imagePathRepository.findByPost(post);
             for(Imagefile imagefile : imagefilesEntity){
                 imagefiles.add(imagefile.getImagefile());
             }
-
             int likeCnt = likeRepository.findAllByPost(post).size();
-
             postResponseDtoList.add(new PostResponseDto(
                     post.getId(),
                     post.getMember().getUsername(),
@@ -109,10 +104,9 @@ public class PostService {
         return postResponseDtoList;
     }
 
-    // Post 수정
     @Transactional
-    public EditPostRequestDto editPost(Long id, MultipartFile multipartFile,
-                                       EditPostRequestDto postRequestDto, String username) throws IOException {
+    public EditPostResponseDto editPost(Long id, List<MultipartFile> multipartFileList,
+                                        EditPostRequestDto editPostRequestDto, String username) throws IOException {
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("해당 ID의 회원이 존재하지 않습니다.")
         );
@@ -122,14 +116,28 @@ public class PostService {
         if(!Objects.equals(username, post.getMember().getUsername())){
             throw new IllegalArgumentException("본인이 작성한 글만 수정이 가능합니다.");
         }
-        String urlHttps = s3Uploader.upload(multipartFile, "static");
-        String urlHttp = "http" + urlHttps.substring(5);
-        post.update(postRequestDto);
+        List<Imagefile> imagefiles = imagePathRepository.findByPost(post);
+        List<String> imagePathList = editPostRequestDto.getImagefile();
+        List<String> removedImagefiles = new ArrayList<>();
 
-        return postRequestDto;
+        for(int i = 0; i < imagefiles.size(); i++){
+            if(!imagePathList.contains(imagefiles.get(i).getImagefile())){
+                imagePathRepository.deleteById(imagefiles.get(i).getId());
+                removedImagefiles.add(imagefiles.get(i).getImagefile());
+            }
+        }
+
+        for(MultipartFile multipartFile : multipartFileList) {
+            String urlHttps = s3Uploader.upload(multipartFile, "static");
+            String urlHttp = "http" + urlHttps.substring(5);
+            Imagefile imagefile = new Imagefile(urlHttp, post);
+            imagePathRepository.save(imagefile);
+            imagePathList.add(urlHttp);
+        }
+
+        Post editPost = post.update(editPostRequestDto);
+        return new EditPostResponseDto(editPost, imagePathList);
     }
-
-
     // Post 삭제
     @Transactional
     public String deletePost(Long id, String Username){
