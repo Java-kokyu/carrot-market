@@ -37,10 +37,6 @@ public class Post extends Timestamped {
     @Column(nullable = false)
     private String address;
 
-    @Column
-    private int likeCnt;
-
-
     //address는 아직 못해봤다.
 
     @JsonIgnore // 안붙게함
@@ -58,7 +54,6 @@ public class Post extends Timestamped {
         this.imagefile = imagefile;
         this.address = postRequestDto.getAddress();
         this.member = member;
-        this.likeCnt = 0;
     }
 
     public Post(EditPostRequestDto editpostRequestDto, Member member, String imagefile){

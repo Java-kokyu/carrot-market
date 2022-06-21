@@ -34,9 +34,6 @@ public class LikeService {
             Likes like = likeRepository.getLikeByMemberAndPost(member,post);
             likeRepository.delete(like);
         }
-        int count = likeRepository.findAllByPost(post).size();
-        post.setLikeCnt(count);
-        postRepository.save(post);
     }
 
 

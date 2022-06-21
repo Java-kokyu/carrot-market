@@ -24,9 +24,6 @@ public class PostDetailResponseDto extends Timestamped {
     private LocalDateTime modifiedAt;
     private String profileImage;
 
-//    int cntComment = commentList.size();
-
-
     //좋아요 한 사람들의 아이디 리스트는?
 
 

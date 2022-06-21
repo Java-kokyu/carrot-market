@@ -53,12 +53,14 @@ public class PostService {
         return new PostDetailResponseDto(post);
     }
 
+    // Post 전체조회
     @Transactional(readOnly = true)
     public List<PostResponseDto> getAllPosts() {
         List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
         for (Post post : postList) {
             int commentCnt = commentRepository.findAllByPostId(post.getId()).size();
+            int likeCnt = likeRepository.findAllByPost(post).size();
             postResponseDtoList.add(new PostResponseDto(
                     post.getId(),
                     post.getMember().getUsername(),
@@ -70,8 +72,8 @@ public class PostService {
                     post.getImagefile(),
                     post.getAddress(),
                     post.getModifiedAt(),
-                    post.getLikeCnt(),
-                    commentCnt
+                    commentCnt,
+                    likeCnt
             ));
         }
         return postResponseDtoList;
