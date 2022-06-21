@@ -53,10 +53,14 @@ public class PostService {
     }
 
 
+    // 상세 조회
     public PostDetailResponseDto getPostDetail(Long id) {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
         );
+
+        int commentCnt = commentRepository.findAllByPostId(post.getId()).size();
+        int likeCnt = likeRepository.findAllByPost(post).size();
 
         List<Imagefile> imagefilesEntity = imagePathRepository.findByPost(post);
 
@@ -65,7 +69,7 @@ public class PostService {
             imagefiles.add(imagefile.getImagefile());
         }
 
-        return new PostDetailResponseDto(post, imagefiles);
+        return new PostDetailResponseDto(post, imagefiles, commentCnt, likeCnt);
     }
 
 

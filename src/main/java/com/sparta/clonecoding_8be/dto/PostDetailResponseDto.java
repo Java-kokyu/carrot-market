@@ -25,6 +25,9 @@ public class PostDetailResponseDto extends Timestamped {
     private LocalDateTime modifiedAt;
     private String profileImage;
 
+    private int commentCnt;
+    private int likeCnt;
+
     //좋아요 한 사람들의 아이디 리스트는?
 
 
@@ -39,5 +42,19 @@ public class PostDetailResponseDto extends Timestamped {
         this.modifiedAt = post.getModifiedAt();
         this.address = post.getAddress();
         this.profileImage = post.getMember().getProfileImage();
+    }
+    public PostDetailResponseDto(Post post, List<String> imagefile, int commentCnt, int likeCnt){
+        this.postID = post.getId();
+        this.username = post.getMember().getUsername();
+        this.nickname = post.getMember().getNickname();
+        this.title = post.getTitle();
+        this.price = post.getPrice();
+        this.content = post.getContent();
+        this.imagefile = imagefile;
+        this.modifiedAt = post.getModifiedAt();
+        this.address = post.getAddress();
+        this.profileImage = post.getMember().getProfileImage();
+        this.commentCnt = commentCnt;
+        this.likeCnt = likeCnt;
     }
 }
