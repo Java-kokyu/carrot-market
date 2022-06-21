@@ -25,14 +25,14 @@ public class PostController {
     // Post 생성
     @PostMapping("/api/posts")
     public PostDetailResponseDto createPosts(@RequestPart(value = "file",required = false)
-                                                 MultipartFile multipartFile,
+                                                 List<MultipartFile> multipartFileList,
                                              @RequestPart(value = "contents")
                                              PostRequestDto requestDto) throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User principal=(User) authentication.getPrincipal();
         String username = principal.getUsername();
 
-        return postService.createPosts(multipartFile, requestDto, username);
+        return postService.createPosts(multipartFileList, requestDto, username);
     }
 
     // Post 전체조회
