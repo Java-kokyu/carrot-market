@@ -49,25 +49,19 @@ public class PostController {
 
     // Post 수정
     @PutMapping("/api/posts/{postID}")
-    public EditPostRequestDto editPost (@PathVariable Long postID,
+    public EditPostResponseDto editPost (@PathVariable Long postID,
                                          @RequestPart(value = "file",required = false)
-                                            MultipartFile multipartFile,
+                                            List<MultipartFile> multipartFileList,
                                         @RequestPart(value = "contents")
                                         EditPostRequestDto requestDto) throws IOException {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User principal=(User) authentication.getPrincipal();
         String username = principal.getUsername();
 
-        return postService.editPost(postID,multipartFile,requestDto,username);
+        return postService.editPost(postID,multipartFileList,requestDto,username);
 
     }
-//    public void editPost(@PathVariable Long postID,
-//                        @RequestBody EditPostRequestDto requestDto){
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        User principal=(User) authentication.getPrincipal();
-//        String username = principal.getUsername();
-//        postService.editPost(postID, requestDto, username);
-//    }
 
     // Post 삭제
     @DeleteMapping("/api/posts/{postID}")

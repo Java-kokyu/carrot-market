@@ -36,7 +36,7 @@ public class Member extends Timestamped {
     @Column
     private String profileImage;
 
-    @Column(nullable = false)
+    @Column
     private String address;
 
 

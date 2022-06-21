@@ -9,7 +9,6 @@ import lombok.Setter;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -41,7 +40,11 @@ public class Post extends Timestamped {
     @JoinColumn // 다른 model과 연결하겠다
     private Member member;
 
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<Imagefile> imagefiles;
 
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<Comment> comments;
 
 
     public Post (PostRequestDto postRequestDto, Member member){
@@ -60,16 +63,11 @@ public class Post extends Timestamped {
         this.member = member;
     }
 
-    public void update(EditPostRequestDto editPostRequestDto){
+    public Post update(EditPostRequestDto editPostRequestDto){
         this.title = editPostRequestDto.getTitle();
         this.price = editPostRequestDto.getPrice();
         this.content = editPostRequestDto.getContent();
         this.address = editPostRequestDto.getAddress();
+        return this;
     }
-
-//    public void editPost(EditPostRequestDto editPostRequestDto){
-//        this.title = editPostRequestDto.getTitle();
-//        this.price = editPostRequestDto.getPrice();
-//        this.content = editPostRequestDto.getContent();
-//    }
 }
