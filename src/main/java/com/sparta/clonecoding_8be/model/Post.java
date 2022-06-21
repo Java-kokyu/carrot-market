@@ -56,10 +56,4 @@ public class Post extends Timestamped {
         this.content = editPostRequestDto.getContent();
         this.address = editPostRequestDto.getAddress();
     }
-
-//    public void editPost(EditPostRequestDto editPostRequestDto){
-//        this.title = editPostRequestDto.getTitle();
-//        this.price = editPostRequestDto.getPrice();
-//        this.content = editPostRequestDto.getContent();
-//    }
 }

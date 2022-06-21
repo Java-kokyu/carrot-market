@@ -63,12 +63,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/api/**").permitAll()
-                .antMatchers("/user/**").permitAll()
-                .antMatchers("/login/**").permitAll()
-                .antMatchers("/auth/**", "/oauth2/**")
-                .permitAll()
-                .anyRequest().authenticated()
+//                .antMatchers(HttpMethod.POST, "/api/**").authenticated()
+//                .antMatchers("/user/**").permitAll()
+//                .antMatchers("/kauth/**").permitAll()
+//                .antMatchers("/login/**").permitAll()
+//                .antMatchers("/like/**").permitAll()
+//                .antMatchers("/auth/**", "/oauth2/**")
+//                .permitAll()
+                .anyRequest().permitAll()
 
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider))
@@ -79,6 +81,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(successHandler)
                 .userInfoEndpoint()
                 .userService(oAuthUserDeatilsService);
+
+
     }
 
     @Bean

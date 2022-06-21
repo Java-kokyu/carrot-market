@@ -1,7 +1,6 @@
 package com.sparta.clonecoding_8be.service;
 
 import com.sparta.clonecoding_8be.dto.*;
-import com.sparta.clonecoding_8be.model.Comment;
 import com.sparta.clonecoding_8be.model.Imagefile;
 import com.sparta.clonecoding_8be.model.Post;
 import com.sparta.clonecoding_8be.model.Member;
@@ -29,6 +28,7 @@ public class PostService {
     private final LikeRepository likeRepository;
 
 
+    // Post 저장
     // Post 저장
     @Transactional
     public PostDetailResponseDto createPosts(List<MultipartFile> multipartFileList,

@@ -19,7 +19,7 @@ public class Imagefile {
     String imagefile;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name="IMAGEFILE_ID")
     private Post post;
 
     public Imagefile(String imagefile, Post post){

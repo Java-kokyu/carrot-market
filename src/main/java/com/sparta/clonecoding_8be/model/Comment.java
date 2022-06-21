@@ -5,6 +5,8 @@ import com.sparta.clonecoding_8be.util.Timestamped;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -21,11 +23,11 @@ public class Comment extends Timestamped {
     private String comment;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name="MEMBER_ID")
     private Member member;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name="POST_ID")
     private Post post;
 
     @Builder
