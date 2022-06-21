@@ -32,9 +32,6 @@ public class Post extends Timestamped {
     private String content;
 
     @Column(nullable = false)
-    private String imagefile;
-
-    @Column(nullable = false)
     private String address;
 
     //address는 아직 못해봤다.
@@ -47,30 +44,27 @@ public class Post extends Timestamped {
 
 
 
-    public Post (PostRequestDto postRequestDto, Member member, String imagefile){
+    public Post (PostRequestDto postRequestDto, Member member){
         this.title = postRequestDto.getTitle();
         this.price = postRequestDto.getPrice();
         this.content = postRequestDto.getContent();
-        this.imagefile = imagefile;
         this.address = postRequestDto.getAddress();
         this.member = member;
     }
 
-    public Post(EditPostRequestDto editpostRequestDto, Member member, String imagefile){
+    public Post(EditPostRequestDto editpostRequestDto, Member member){
         this.title = editpostRequestDto.getTitle();
         this.price = editpostRequestDto.getPrice();
         this.content = editpostRequestDto.getContent();
-        this.imagefile = imagefile;
         this.address = editpostRequestDto.getAddress();
         this.member = member;
     }
 
-    public void update(EditPostRequestDto editPostRequestDto, String urlHttp){
+    public void update(EditPostRequestDto editPostRequestDto){
         this.title = editPostRequestDto.getTitle();
         this.price = editPostRequestDto.getPrice();
         this.content = editPostRequestDto.getContent();
         this.address = editPostRequestDto.getAddress();
-        this.imagefile = urlHttp;
     }
 
 //    public void editPost(EditPostRequestDto editPostRequestDto){

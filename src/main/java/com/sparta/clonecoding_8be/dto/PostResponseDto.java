@@ -24,7 +24,7 @@ public class PostResponseDto extends Timestamped {
     private String title;
     private Long price;
     private String content;
-    private String imagefile;
+    private List<String> imagefile;
     private String address;
     private LocalDateTime modifiedAt;
     private int commentCnt;

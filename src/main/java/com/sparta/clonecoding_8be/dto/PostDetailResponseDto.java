@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,7 +20,7 @@ public class PostDetailResponseDto extends Timestamped {
     private String title;
     private Long price;
     private String content;
-    private String imagefile;
+    private List<String> imagefile;
     private String address;
     private LocalDateTime modifiedAt;
     private String profileImage;
@@ -27,14 +28,14 @@ public class PostDetailResponseDto extends Timestamped {
     //좋아요 한 사람들의 아이디 리스트는?
 
 
-    public PostDetailResponseDto(Post post){
+    public PostDetailResponseDto(Post post, List<String> imagefile){
         this.postID = post.getId();
         this.username = post.getMember().getUsername();
         this.nickname = post.getMember().getNickname();
         this.title = post.getTitle();
         this.price = post.getPrice();
         this.content = post.getContent();
-        this.imagefile = post.getImagefile();
+        this.imagefile = imagefile;
         this.modifiedAt = post.getModifiedAt();
         this.address = post.getAddress();
         this.profileImage = post.getMember().getProfileImage();

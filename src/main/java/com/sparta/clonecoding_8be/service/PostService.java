@@ -2,13 +2,11 @@ package com.sparta.clonecoding_8be.service;
 
 import com.sparta.clonecoding_8be.dto.*;
 import com.sparta.clonecoding_8be.model.Comment;
+import com.sparta.clonecoding_8be.model.Imagefile;
 import com.sparta.clonecoding_8be.model.Post;
 import com.sparta.clonecoding_8be.model.Member;
 import com.sparta.clonecoding_8be.postimg.S3Uploader;
-import com.sparta.clonecoding_8be.repository.CommentRepository;
-import com.sparta.clonecoding_8be.repository.LikeRepository;
-import com.sparta.clonecoding_8be.repository.MemberRepository;
-import com.sparta.clonecoding_8be.repository.PostRepository;
+import com.sparta.clonecoding_8be.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +23,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
+    private final ImagePathRepository imagePathRepository;
     private final S3Uploader s3Uploader;
     private final CommentRepository commentRepository;
 
@@ -32,34 +31,56 @@ public class PostService {
 
 
     // Post 저장
+    // Post 저장
     @Transactional
-    public PostDetailResponseDto createPosts(MultipartFile multipartFile, PostRequestDto postRequestDto, String username) throws IOException {
+    public PostDetailResponseDto createPosts(List<MultipartFile> multipartFileList, PostRequestDto postRequestDto, String username) throws IOException {
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("해당 ID의 회원이 존재하지 않습니다.")
         );
-        String urlHttps = s3Uploader.upload(multipartFile, "static");
-        String urlHttp = "http" + urlHttps.substring(5);
-        Post post = new Post(postRequestDto, member, urlHttp);
-        postRepository.save(post);
+        List<String> imagePathList = new ArrayList<>();
 
-        return new PostDetailResponseDto(post);
+        Post post = postRepository.save(new Post(postRequestDto, member));
+
+        for(MultipartFile multipartFile: multipartFileList) {
+            String urlHttps = s3Uploader.upload(multipartFile, "static");
+            String urlHttp = "http" + urlHttps.substring(5);
+            Imagefile imagefile = new Imagefile(urlHttp, post);
+            System.out.println(imagefile);
+            imagePathRepository.save(imagefile);
+            imagePathList.add(urlHttp);
+        }
+        return new PostDetailResponseDto(post, imagePathList);
     }
 
-    // Post 상세 조회
+
     public PostDetailResponseDto getPostDetail(Long id) {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
         );
-        return new PostDetailResponseDto(post);
+
+        List<Imagefile> imagefilesEntity = imagePathRepository.findByPost(post);
+
+        List<String> imagefiles = new ArrayList<>();
+        for(Imagefile imagefile : imagefilesEntity){
+            imagefiles.add(imagefile.getImagefile());
+        }
+
+        return new PostDetailResponseDto(post, imagefiles);
     }
+
 
     // Post 전체조회
     @Transactional(readOnly = true)
     public List<PostResponseDto> getAllPosts() {
         List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
+        List<String> imagefiles = new ArrayList<>();
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
         for (Post post : postList) {
             int commentCnt = commentRepository.findAllByPostId(post.getId()).size();
+            List<Imagefile> imagefilesEntity = imagePathRepository.findByPost(post);
+            for(Imagefile imagefile : imagefilesEntity){
+                imagefiles.add(imagefile.getImagefile());
+            }
             int likeCnt = likeRepository.findAllByPost(post).size();
             postResponseDtoList.add(new PostResponseDto(
                     post.getId(),
@@ -69,7 +90,7 @@ public class PostService {
                     post.getTitle(),
                     post.getPrice(),
                     post.getContent(),
-                    post.getImagefile(),
+                    imagefiles,
                     post.getAddress(),
                     post.getModifiedAt(),
                     commentCnt,
@@ -93,7 +114,7 @@ public class PostService {
         }
         String urlHttps = s3Uploader.upload(multipartFile, "static");
         String urlHttp = "http" + urlHttps.substring(5);
-        post.update(postRequestDto, urlHttp);
+        post.update(postRequestDto);
 
         return postRequestDto  ;
     }
