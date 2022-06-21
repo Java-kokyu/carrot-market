@@ -9,8 +9,6 @@ import lombok.Setter;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Setter
@@ -43,7 +41,6 @@ public class Post extends Timestamped {
 
 
 
-
     public Post (PostRequestDto postRequestDto, Member member){
         this.title = postRequestDto.getTitle();
         this.price = postRequestDto.getPrice();
@@ -52,13 +49,6 @@ public class Post extends Timestamped {
         this.member = member;
     }
 
-    public Post(EditPostRequestDto editpostRequestDto, Member member){
-        this.title = editpostRequestDto.getTitle();
-        this.price = editpostRequestDto.getPrice();
-        this.content = editpostRequestDto.getContent();
-        this.address = editpostRequestDto.getAddress();
-        this.member = member;
-    }
 
     public void update(EditPostRequestDto editPostRequestDto){
         this.title = editPostRequestDto.getTitle();

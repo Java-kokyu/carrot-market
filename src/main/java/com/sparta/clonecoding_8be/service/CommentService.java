@@ -35,7 +35,8 @@ public class CommentService {
         Comment comment = commentRequestDto.toEntity();
         comment.registCommentInfo(post,member);
         commentRepository.save(comment);
-        CommentResponseDto commentResponseDto = new CommentResponseDto(comment.getId(), comment.getComment(), member.getNickname(), member.getProfileImage(), member.getModifiedAt());
+        CommentResponseDto commentResponseDto = new CommentResponseDto(comment.getId(), comment.getComment(),
+                member.getNickname(), member.getProfileImage(), member.getModifiedAt());
         return commentResponseDto;
     }
 

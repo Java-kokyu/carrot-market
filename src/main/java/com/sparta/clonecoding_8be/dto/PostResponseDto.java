@@ -1,13 +1,8 @@
 package com.sparta.clonecoding_8be.dto;
 
-
-import com.sparta.clonecoding_8be.model.Comment;
-import com.sparta.clonecoding_8be.model.Member;
-import com.sparta.clonecoding_8be.model.Post;
 import com.sparta.clonecoding_8be.util.Timestamped;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;

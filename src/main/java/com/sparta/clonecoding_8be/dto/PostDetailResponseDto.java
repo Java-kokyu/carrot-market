@@ -24,11 +24,9 @@ public class PostDetailResponseDto extends Timestamped {
     private String address;
     private LocalDateTime modifiedAt;
     private String profileImage;
-
     private int commentCnt;
     private int likeCnt;
 
-    //좋아요 한 사람들의 아이디 리스트는?
 
 
     public PostDetailResponseDto(Post post, List<String> imagefile){
