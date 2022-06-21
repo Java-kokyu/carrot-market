@@ -1,5 +1,6 @@
 package com.sparta.clonecoding_8be.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.clonecoding_8be.dto.*;
 import com.sparta.clonecoding_8be.model.Imagefile;
 import com.sparta.clonecoding_8be.model.Post;
@@ -7,6 +8,7 @@ import com.sparta.clonecoding_8be.model.Member;
 import com.sparta.clonecoding_8be.postimg.S3Uploader;
 import com.sparta.clonecoding_8be.repository.*;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONArray;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -117,6 +119,7 @@ public class PostService {
             throw new IllegalArgumentException("본인이 작성한 글만 수정이 가능합니다.");
         }
         List<Imagefile> imagefiles = imagePathRepository.findByPost(post);
+
         List<String> imagePathList = editPostRequestDto.getImagefile();
         List<String> removedImagefiles = new ArrayList<>();
 
@@ -126,14 +129,15 @@ public class PostService {
                 removedImagefiles.add(imagefiles.get(i).getImagefile());
             }
         }
-
-        for(MultipartFile multipartFile : multipartFileList) {
-            String urlHttps = s3Uploader.upload(multipartFile, "static");
-            String urlHttp = "http" + urlHttps.substring(5);
-            Imagefile imagefile = new Imagefile(urlHttp, post);
-            imagePathRepository.save(imagefile);
-            imagePathList.add(urlHttp);
-        }
+        if(multipartFileList != null){
+            for(MultipartFile multipartFile : multipartFileList) {
+                String urlHttps = s3Uploader.upload(multipartFile, "static");
+                String urlHttp = "http" + urlHttps.substring(5);
+                Imagefile imagefile = new Imagefile(urlHttp, post);
+                imagePathRepository.save(imagefile);
+                imagePathList.add(urlHttp);
+            }
+        }        
 
         Post editPost = post.update(editPostRequestDto);
         return new EditPostResponseDto(editPost, imagePathList);

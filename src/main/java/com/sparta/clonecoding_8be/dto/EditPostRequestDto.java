@@ -4,6 +4,7 @@ import com.sparta.clonecoding_8be.model.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.minidev.json.JSONArray;
 
 import java.util.List;
 
