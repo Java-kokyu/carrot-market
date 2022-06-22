@@ -5,15 +5,19 @@ import com.sparta.clonecoding_8be.model.Imagefile;
 import com.sparta.clonecoding_8be.model.Post;
 import com.sparta.clonecoding_8be.model.Member;
 import com.sparta.clonecoding_8be.repository.*;
+import com.sparta.clonecoding_8be.service.S3Uploader;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +28,8 @@ public class PostService {
     private final ImagePathRepository imagePathRepository;
     private final S3Uploader s3Uploader;
     private final CommentRepository commentRepository;
+
+    private static final int DEFAULT_PAGE_NUM = 0;
 
     private final LikeRepository likeRepository;
 
@@ -70,10 +76,15 @@ public class PostService {
         return new PostDetailResponseDto(post, imagefiles, commentCnt, likeCnt);
     }
 
+    private Page<Post> fetchPages(Long lastPostId, int size) {
+        PageRequest pageRequest = PageRequest.of(DEFAULT_PAGE_NUM, size);
+        return postRepository.findAllByLastPostId(lastPostId, pageRequest);
+    }
 
-    // Post 전체조회
-    @Transactional(readOnly = true)
-    public List<PostResponseDto> getAllPosts() {
+    // Post 전체
+    public GoToPageDto fetchPostPagesBy(Long lastPostId, int size) {
+        Page<Post> posts = fetchPages(lastPostId, size);
+
         List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
 
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
@@ -100,8 +111,73 @@ public class PostService {
                     likeCnt
             ));
         }
-        return postResponseDtoList;
+        return new GoToPageDto(postResponseDtoList,posts);
     }
+
+
+//     Post 전체조회
+//    @Transactional(readOnly = true)
+//    public List<PostResponseDto> getAllPosts() {
+//        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
+//
+//        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
+//        for (Post post : postList) {
+//            int commentCnt = commentRepository.findAllByPostId(post.getId()).size();
+//            List<String> imagefiles = new ArrayList<>();
+//            List<Imagefile> imagefilesEntity = imagePathRepository.findByPost(post);
+//            for(Imagefile imagefile : imagefilesEntity){
+//                imagefiles.add(imagefile.getImagefile());
+//            }
+//            int likeCnt = likeRepository.findAllByPost(post).size();
+//            postResponseDtoList.add(new PostResponseDto(
+//                    post.getId(),
+//                    post.getMember().getUsername(),
+//                    post.getMember().getNickname(),
+//                    post.getMember().getProfileImage(),
+//                    post.getTitle(),
+//                    post.getPrice(),
+//                    post.getContent(),
+//                    imagefiles,
+//                    post.getAddress(),
+//                    post.getModifiedAt(),
+//                    commentCnt,
+//                    likeCnt
+//            ));
+//        }
+//        return postResponseDtoList;
+//    }
+//
+//    // 전체 매물 조회
+//    @Transactional
+//    public Slice<PostResponseDto> getAllPost(Long page) {
+//        PageRequest pageRequest = PageRequest.of(Math.toIntExact(page), 5, Sort.by(Sort.Direction.DESC, "createdAt"));
+//        Slice<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
+//        Slice<PostResponseDto> postResponseDtoList = new Post
+//        for (Post post : postList) {
+//            int commentCnt = commentRepository.findAllByPostId(post.getId()).size();
+//            List<String> imagefiles = new ArrayList<>();
+//            List<Imagefile> imagefilesEntity = imagePathRepository.findByPost(post);
+//            for(Imagefile imagefile : imagefilesEntity){
+//                imagefiles.add(imagefile.getImagefile());
+//            }
+//            int likeCnt = likeRepository.findAllByPost(post).size();
+//            postResponseDtoList.add(new PostResponseDto(
+//                    post.getId(),
+//                    post.getMember().getUsername(),
+//                    post.getMember().getNickname(),
+//                    post.getMember().getProfileImage(),
+//                    post.getTitle(),
+//                    post.getPrice(),
+//                    post.getContent(),
+//                    imagefiles,
+//                    post.getAddress(),
+//                    post.getModifiedAt(),
+//                    commentCnt,
+//                    likeCnt
+//            ));
+//        }
+//        return postResponseDtoList;
+//    }
 
     @Transactional
     public EditPostResponseDto editPost(Long id, List<MultipartFile> multipartFileList,

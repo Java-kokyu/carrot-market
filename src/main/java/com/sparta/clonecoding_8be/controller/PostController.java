@@ -1,9 +1,13 @@
 package com.sparta.clonecoding_8be.controller;
 
 import com.sparta.clonecoding_8be.dto.post.*;
+import com.sparta.clonecoding_8be.model.Post;
 import com.sparta.clonecoding_8be.repository.PostRepository;
 import com.sparta.clonecoding_8be.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -32,11 +36,25 @@ public class PostController {
         return postService.createPosts(multipartFileList, requestDto, username);
     }
 
-    // Post 전체조회
+//     Post 전체조회
     @GetMapping("/api/posts")
-    public List<PostResponseDto> getAllposts(){
-        return postService.getAllPosts();
+    public GoToPageDto getPostPages(@RequestParam Long lastPostId, @RequestParam int size){
+        return postService.fetchPostPagesBy(lastPostId,size);
     }
+
+//    // 전체 매물 조회
+//    @GetMapping("/api/posts/all")
+//    public Slice<Post> getPosts(HttpServletRequest httpServletRequest){
+//        Long page = Long.parseLong(httpServletRequest.getParameter("page"));
+//        return postService.getAllPost(page);
+//    }
+
+    // 전체조회
+//    @GetMapping("/api/posts")
+//    public ResponseEntity<GoToPageDto> getPostPages(@RequestParam Long lastPostId, @RequestParam int size) {
+//        GoToPageDto goToPageDto = postService.fetchPostPagesBy(lastPostId, size);
+//        return new ResponseEntity<>(goToPageDto, HttpStatus.OK);
+//    }
 
     // Post 상세조회
     @GetMapping("/api/posts/{postID}")

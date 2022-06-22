@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,9 +39,9 @@ public class PostResponseDto extends Timestamped {
 //        this.title = post.getTitle();
 //        this.price = post.getPrice();
 //        this.content = post.getContent();
-//        this.imagefile = post.getImagefile();
 //        this.address = post.getAddress();
 //        this.modifiedAt = post.getModifiedAt();
+//        this.posts = posts;
 //    }
 
 
