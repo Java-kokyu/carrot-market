@@ -1,6 +1,7 @@
 package com.sparta.clonecoding_8be.security.jwt;
 
 import com.sparta.clonecoding_8be.dto.token.TokenDto;
+import com.sparta.clonecoding_8be.security.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -83,7 +84,6 @@ public class TokenProvider {
                         .collect(Collectors.toList());
 
         // UserDetails 객체를 만들어서 Authentication 리턴
-        // UserDetailsImpl userDetails = new UserDetailsImpl()
         UserDetails principal = new User(claims.getSubject(), "", authorities); //UserDetails에 Member 객체를 넣으면?
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
