@@ -29,6 +29,14 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+
+    public Member findById(Long id) {
+        Member user = memberRepository.findById(id).orElseThrow(
+                ()-> new IllegalArgumentException("찾는 유저가 없습니다")
+        );
+        return user;
+    }
+
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) throws UserException{
         if (memberRepository.existsByUsername(memberRequestDto.getUsername())) {
