@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -38,23 +39,10 @@ public class PostController {
 
 //     Post 전체조회
     @GetMapping("/api/posts")
-    public GoToPageDto getPostPages(@RequestParam Long lastPostId, @RequestParam int size){
-        return postService.fetchPostPagesBy(lastPostId,size);
+    public List<PostResponseDto> getAllposts(){
+        return postService.getAllPosts();
     }
 
-//    // 전체 매물 조회
-//    @GetMapping("/api/posts/all")
-//    public Slice<Post> getPosts(HttpServletRequest httpServletRequest){
-//        Long page = Long.parseLong(httpServletRequest.getParameter("page"));
-//        return postService.getAllPost(page);
-//    }
-
-    // 전체조회
-//    @GetMapping("/api/posts")
-//    public ResponseEntity<GoToPageDto> getPostPages(@RequestParam Long lastPostId, @RequestParam int size) {
-//        GoToPageDto goToPageDto = postService.fetchPostPagesBy(lastPostId, size);
-//        return new ResponseEntity<>(goToPageDto, HttpStatus.OK);
-//    }
 
     // Post 상세조회
     @GetMapping("/api/posts/{postID}")

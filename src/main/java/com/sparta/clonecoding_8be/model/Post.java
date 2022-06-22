@@ -1,9 +1,7 @@
 package com.sparta.clonecoding_8be.model;
 
 import com.sparta.clonecoding_8be.dto.post.EditPostRequestDto;
-import com.sparta.clonecoding_8be.dto.post.GoToPageDto;
 import com.sparta.clonecoding_8be.dto.post.PostRequestDto;
-import com.sparta.clonecoding_8be.dto.post.PostResponseDto;
 import com.sparta.clonecoding_8be.util.Timestamped;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
