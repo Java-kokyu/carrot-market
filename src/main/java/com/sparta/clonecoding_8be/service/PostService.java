@@ -1,14 +1,11 @@
 package com.sparta.clonecoding_8be.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.clonecoding_8be.dto.*;
+import com.sparta.clonecoding_8be.dto.post.*;
 import com.sparta.clonecoding_8be.model.Imagefile;
 import com.sparta.clonecoding_8be.model.Post;
 import com.sparta.clonecoding_8be.model.Member;
-import com.sparta.clonecoding_8be.postimg.S3Uploader;
 import com.sparta.clonecoding_8be.repository.*;
 import lombok.RequiredArgsConstructor;
-import net.minidev.json.JSONArray;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;

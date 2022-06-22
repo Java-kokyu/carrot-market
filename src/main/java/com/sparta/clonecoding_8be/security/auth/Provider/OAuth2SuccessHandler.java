@@ -1,6 +1,6 @@
 package com.sparta.clonecoding_8be.security.auth.Provider;
 
-import com.sparta.clonecoding_8be.dto.TokenDto;
+import com.sparta.clonecoding_8be.dto.token.TokenDto;
 import com.sparta.clonecoding_8be.model.RefreshToken;
 import com.sparta.clonecoding_8be.repository.RefreshTokenRepository;
 import com.sparta.clonecoding_8be.security.UserDetailsImpl;

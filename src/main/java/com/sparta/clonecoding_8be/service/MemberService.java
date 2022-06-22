@@ -3,10 +3,10 @@ package com.sparta.clonecoding_8be.service;
 
 import com.sparta.clonecoding_8be.common.Constants;
 import com.sparta.clonecoding_8be.common.exception.UserException;
-import com.sparta.clonecoding_8be.dto.MemberRequestDto;
-import com.sparta.clonecoding_8be.dto.MemberResponseDto;
-import com.sparta.clonecoding_8be.dto.TokenDto;
-import com.sparta.clonecoding_8be.dto.TokenRequestDto;
+import com.sparta.clonecoding_8be.dto.user.MemberRequestDto;
+import com.sparta.clonecoding_8be.dto.user.MemberResponseDto;
+import com.sparta.clonecoding_8be.dto.token.TokenDto;
+import com.sparta.clonecoding_8be.dto.token.TokenRequestDto;
 import com.sparta.clonecoding_8be.model.Member;
 import com.sparta.clonecoding_8be.model.RefreshToken;
 import com.sparta.clonecoding_8be.repository.MemberRepository;

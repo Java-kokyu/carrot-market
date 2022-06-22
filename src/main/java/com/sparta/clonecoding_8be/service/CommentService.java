@@ -1,8 +1,8 @@
 package com.sparta.clonecoding_8be.service;
 
-import com.sparta.clonecoding_8be.dto.CommentRequestDto;
-import com.sparta.clonecoding_8be.dto.CommentResponseDto;
-import com.sparta.clonecoding_8be.dto.EditCommentRequestDto;
+import com.sparta.clonecoding_8be.dto.comment.CommentRequestDto;
+import com.sparta.clonecoding_8be.dto.comment.CommentResponseDto;
+import com.sparta.clonecoding_8be.dto.comment.EditCommentRequestDto;
 import com.sparta.clonecoding_8be.model.Comment;
 import com.sparta.clonecoding_8be.model.Member;
 import com.sparta.clonecoding_8be.model.Post;
@@ -10,14 +10,12 @@ import com.sparta.clonecoding_8be.repository.CommentRepository;
 import com.sparta.clonecoding_8be.repository.MemberRepository;
 import com.sparta.clonecoding_8be.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service

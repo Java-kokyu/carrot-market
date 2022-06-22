@@ -1,6 +1,6 @@
 package com.sparta.clonecoding_8be.security.jwt;
 
-import com.sparta.clonecoding_8be.dto.TokenDto;
+import com.sparta.clonecoding_8be.dto.token.TokenDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

@@ -1,12 +1,10 @@
 package com.sparta.clonecoding_8be.model;
 
-import com.sparta.clonecoding_8be.dto.EditCommentRequestDto;
+import com.sparta.clonecoding_8be.dto.comment.EditCommentRequestDto;
 import com.sparta.clonecoding_8be.util.Timestamped;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 

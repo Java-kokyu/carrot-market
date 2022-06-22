@@ -1,4 +1,4 @@
-package com.sparta.clonecoding_8be.dto;
+package com.sparta.clonecoding_8be.dto.user;
 
 import com.sparta.clonecoding_8be.model.Member;
 import com.sparta.clonecoding_8be.model.UserRole;

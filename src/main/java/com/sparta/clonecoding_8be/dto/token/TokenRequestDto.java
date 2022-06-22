@@ -1,4 +1,4 @@
-package com.sparta.clonecoding_8be.dto;
+package com.sparta.clonecoding_8be.dto.token;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

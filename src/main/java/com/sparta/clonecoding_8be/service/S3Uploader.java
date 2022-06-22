@@ -1,4 +1,4 @@
-package com.sparta.clonecoding_8be.postimg;
+package com.sparta.clonecoding_8be.service;
 
 
 

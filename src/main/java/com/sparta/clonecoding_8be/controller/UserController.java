@@ -1,9 +1,13 @@
 package com.sparta.clonecoding_8be.controller;
 
 import com.sparta.clonecoding_8be.common.exception.UserException;
-import com.sparta.clonecoding_8be.dto.*;
+import com.sparta.clonecoding_8be.dto.token.TokenDto;
+import com.sparta.clonecoding_8be.dto.token.TokenRequestDto;
+import com.sparta.clonecoding_8be.dto.user.MemberRequestDto;
+import com.sparta.clonecoding_8be.dto.user.MemberResponseDto;
+import com.sparta.clonecoding_8be.dto.user.UserInfo;
 import com.sparta.clonecoding_8be.model.Member;
-import com.sparta.clonecoding_8be.postimg.S3Uploader;
+import com.sparta.clonecoding_8be.service.S3Uploader;
 import com.sparta.clonecoding_8be.repository.MemberRepository;
 import com.sparta.clonecoding_8be.service.MemberService;
 import lombok.RequiredArgsConstructor;

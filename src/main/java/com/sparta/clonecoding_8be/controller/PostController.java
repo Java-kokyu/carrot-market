@@ -1,15 +1,12 @@
 package com.sparta.clonecoding_8be.controller;
 
-import com.sparta.clonecoding_8be.dto.*;
-import com.sparta.clonecoding_8be.model.Post;
+import com.sparta.clonecoding_8be.dto.post.*;
 import com.sparta.clonecoding_8be.repository.PostRepository;
 import com.sparta.clonecoding_8be.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,8 +49,8 @@ public class PostController {
     public EditPostResponseDto editPost (@PathVariable Long postID,
                                          @RequestPart(value = "file",required = false)
                                          List<MultipartFile> multipartFileList,
-                                        @RequestPart(value = "contents")
-                                        EditPostRequestDto requestDto) throws IOException {
+                                         @RequestPart(value = "contents")
+                                         EditPostRequestDto requestDto) throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User principal=(User) authentication.getPrincipal();
         String username = principal.getUsername();

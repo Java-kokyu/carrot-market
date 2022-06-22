@@ -1,8 +1,8 @@
 package com.sparta.clonecoding_8be.controller;
 
-import com.sparta.clonecoding_8be.dto.CommentRequestDto;
-import com.sparta.clonecoding_8be.dto.CommentResponseDto;
-import com.sparta.clonecoding_8be.dto.EditCommentRequestDto;
+import com.sparta.clonecoding_8be.dto.comment.CommentRequestDto;
+import com.sparta.clonecoding_8be.dto.comment.CommentResponseDto;
+import com.sparta.clonecoding_8be.dto.comment.EditCommentRequestDto;
 import com.sparta.clonecoding_8be.model.Member;
 import com.sparta.clonecoding_8be.repository.MemberRepository;
 import com.sparta.clonecoding_8be.service.CommentService;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController

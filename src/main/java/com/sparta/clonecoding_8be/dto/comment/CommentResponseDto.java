@@ -1,4 +1,4 @@
-package com.sparta.clonecoding_8be.dto;
+package com.sparta.clonecoding_8be.dto.comment;
 
 import com.sparta.clonecoding_8be.model.Comment;
 import com.sparta.clonecoding_8be.model.Member;
