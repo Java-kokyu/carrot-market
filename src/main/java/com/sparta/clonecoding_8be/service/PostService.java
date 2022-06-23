@@ -76,19 +76,11 @@ public class PostService {
         return new PostDetailResponseDto(post, imagefiles, commentCnt, likeCnt);
     }
 
-    private Page<Post> fetchPages(Long lastPostId, int size) {
-        PageRequest pageRequest = PageRequest.of(DEFAULT_PAGE_NUM, size);
-        return postRepository.findAllByLastPostId(lastPostId, pageRequest);
-    }
-
-    // Post 전체
-    public GoToPageDto fetchPostPagesBy(Long lastPostId, int size) {
-        Page<Post> posts = fetchPages(lastPostId, size);
-
-        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
-
+    public List<PostResponseDto> fetchPostPagesBy(Long lastPostId, int size) {
+        Page<Post> posts = fetchPages(lastPostId, size); // followers의 게시물들을 페이지네이션해서 가져온다.
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
-        for (Post post : postList) {
+
+        for (Post post : posts) {
             int commentCnt = commentRepository.findAllByPostId(post.getId()).size();
             List<String> imagefiles = new ArrayList<>();
             List<Imagefile> imagefilesEntity = imagePathRepository.findByPost(post);
@@ -111,7 +103,13 @@ public class PostService {
                     likeCnt
             ));
         }
-        return new GoToPageDto(postResponseDtoList,posts);
+
+        return postResponseDtoList;
+    }
+
+    private Page<Post> fetchPages(Long lastPostId, int size) {
+        PageRequest pageRequest = PageRequest.of(DEFAULT_PAGE_NUM, size); // 페이지네이션을 위한 PageRequest, 페이지는 0으로 고정한다.
+        return postRepository.findByIdLessThanOrderByModifiedAtDesc(lastPostId, pageRequest); // JPA 쿼리 메소드
     }
 
 

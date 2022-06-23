@@ -42,6 +42,9 @@ public class Post extends Timestamped {
     private List<Imagefile> imagefiles;
 
     @OneToMany(mappedBy = "post", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    private List<Likes> likes;
+
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<Comment> comments;
 
 

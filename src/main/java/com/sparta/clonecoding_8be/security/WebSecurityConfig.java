@@ -63,14 +63,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-//                .antMatchers(HttpMethod.POST, "/api/**").authenticated()
-//                .antMatchers("/user/**").permitAll()
-//                .antMatchers("/kauth/**").permitAll()
-//                .antMatchers("/login/**").permitAll()
-//                .antMatchers("/like/**").permitAll()
-//                .antMatchers("/auth/**", "/oauth2/**")
-//                .permitAll()
-                .anyRequest().permitAll()
+                .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+                .antMatchers("/user/**").permitAll()
+                .antMatchers("/kauth/**").permitAll()
+                .antMatchers("/login/**").permitAll()
+                .antMatchers("/like/**").permitAll()
+                .antMatchers("/auth/**", "/oauth2/**")
+                .permitAll()
+                .anyRequest().authenticated()
 
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider))
@@ -90,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
-        configuration.addAllowedOriginPattern("*"); // 배포 전 모두 허용
+        configuration.addAllowedOriginPattern("http://carrotmarket.s3-website.ap-northeast-2.amazonaws.com"); // 배포 전 모두 허용
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
