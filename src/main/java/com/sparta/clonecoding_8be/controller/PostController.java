@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,7 +26,7 @@ public class PostController {
     // Post 생성
     @PostMapping("/api/posts")
     public PostDetailResponseDto createPosts(@RequestPart(value = "file",required = false)
-                                                 List<MultipartFile> multipartFileList,
+                                             List<MultipartFile> multipartFileList,
                                              @RequestPart(value = "contents")
                                              PostRequestDto requestDto) throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -37,12 +36,25 @@ public class PostController {
         return postService.createPosts(multipartFileList, requestDto, username);
     }
 
-//     Post 전체조회
+    //     Post 전체조회
     @GetMapping("/api/posts")
-    public List<PostResponseDto> getAllposts(){
-        return postService.getAllPosts();
+    public GoToPageDto getPostPages(@RequestParam Long lastPostId, @RequestParam int size){
+        return postService.fetchPostPagesBy(lastPostId,size);
     }
 
+//    // 전체 매물 조회
+//    @GetMapping("/api/posts/all")
+//    public Slice<Post> getPosts(HttpServletRequest httpServletRequest){
+//        Long page = Long.parseLong(httpServletRequest.getParameter("page"));
+//        return postService.getAllPost(page);
+//    }
+
+    // 전체조회
+//    @GetMapping("/api/posts")
+//    public ResponseEntity<GoToPageDto> getPostPages(@RequestParam Long lastPostId, @RequestParam int size) {
+//        GoToPageDto goToPageDto = postService.fetchPostPagesBy(lastPostId, size);
+//        return new ResponseEntity<>(goToPageDto, HttpStatus.OK);
+//    }
 
     // Post 상세조회
     @GetMapping("/api/posts/{postID}")
