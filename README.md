@@ -97,7 +97,7 @@ https://youtube.com
 
 ## 📖 ERD 
 ___
-![img_2.png](img_2.png)
+![ERD](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbEYtZp%2FbtrFzxK8WiR%2FxyKLUgnKS8Dv7ASnpZ6NT1%2Fimg.png)
 
 ## 🗒️ 페이지 & 기능
 
@@ -159,8 +159,8 @@ ___
 
 ## 📐 API 설계
 ___
-![img_3.png](img_3.png)
-![img_4.png](img_4.png)
+![API설계1](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FAURpn%2FbtrFzNtr9ee%2Fc0G7MGsSzR2PBH6OS9CV0k%2Fimg.png)
+![API설계2](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FtrRRO%2FbtrFBisriEg%2FTZ0QkccKdcVOQcNLdAk1ZK%2Fimg.png)
 
 <br/>
 
