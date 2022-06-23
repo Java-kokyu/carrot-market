@@ -38,8 +38,9 @@ public class PostController {
 
     //     Post 전체조회
     @GetMapping("/api/posts")
-    public GoToPageDto getPostPages(@RequestParam Long lastPostId, @RequestParam int size){
-        return postService.fetchPostPagesBy(lastPostId,size);
+    public ResponseEntity<List<PostResponseDto>> getArticlePages(@RequestParam Long lastPostId, @RequestParam int size) {
+        List<PostResponseDto> postResponseDtoList = postService.fetchPostPagesBy(lastPostId, size);
+        return new ResponseEntity<>(postResponseDtoList, HttpStatus.OK);
     }
 
 //    // 전체 매물 조회

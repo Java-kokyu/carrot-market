@@ -41,7 +41,6 @@ public class PostResponseDto extends Timestamped {
 //        this.content = post.getContent();
 //        this.address = post.getAddress();
 //        this.modifiedAt = post.getModifiedAt();
-//        this.posts = posts;
 //    }
 
 
