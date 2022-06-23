@@ -10,6 +10,7 @@ import lombok.*;
 public class TokenDto {
     private String username;
     private String nickname;
+    private String address;
     private String grantType;
     private String accessToken;
     private String refreshToken;

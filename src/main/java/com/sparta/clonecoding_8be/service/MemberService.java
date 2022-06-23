@@ -12,6 +12,7 @@ import com.sparta.clonecoding_8be.model.RefreshToken;
 import com.sparta.clonecoding_8be.repository.MemberRepository;
 import com.sparta.clonecoding_8be.repository.RefreshTokenRepository;
 import com.sparta.clonecoding_8be.security.jwt.TokenProvider;
+import com.sparta.clonecoding_8be.validator.LoginValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,6 +30,7 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final LoginValidator loginValidator;
 
     public Member findById(Long id) {
         Member user = memberRepository.findById(id).orElseThrow(
@@ -47,7 +49,9 @@ public class MemberService {
         return MemberResponseDto.of(memberRepository.save(member));
     }
 
-    public TokenDto login(MemberRequestDto memberRequestDto) {
+    public TokenDto login(MemberRequestDto memberRequestDto) throws UserException {
+        Member member = loginValidator.isValidUsername(memberRequestDto.getUsername());
+        loginValidator.isValidPassword(memberRequestDto.getPassword(), member.getPassword());
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = memberRequestDto.toAuthentication();
         // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
@@ -58,9 +62,8 @@ public class MemberService {
 
         tokenDto.setUsername(memberRequestDto.getUsername());
 
-        Member member = memberRepository.findByUsername(memberRequestDto.getUsername()).orElse(null);
-        assert member != null;
         tokenDto.setNickname(member.getNickname());
+        tokenDto.setAddress(member.getAddress());
 
         // 4. RefreshToken 저장
         RefreshToken refreshToken = RefreshToken.builder()

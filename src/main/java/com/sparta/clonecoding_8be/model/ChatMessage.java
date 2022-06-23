@@ -1,11 +1,8 @@
 package com.sparta.clonecoding_8be.model;
 
-import com.sparta.clonecoding_8be.dto.chat.ChatMessageDto;
 import com.sparta.clonecoding_8be.dto.chat.ChatMessageRequestDto;
-import com.sparta.clonecoding_8be.dto.chat.MessageType;
 import com.sparta.clonecoding_8be.service.MemberService;
 import lombok.*;
-import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 

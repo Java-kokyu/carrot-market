@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto memberRequestDto) {
+    public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto memberRequestDto) throws UserException {
         return ResponseEntity.ok(memberService.login(memberRequestDto));
     }
 

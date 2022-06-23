@@ -1,19 +1,18 @@
 package com.sparta.clonecoding_8be.service;
 
+
 import com.sparta.clonecoding_8be.dto.chat.ChatRoomRequestDto;
 import com.sparta.clonecoding_8be.model.ChatRoom;
 import com.sparta.clonecoding_8be.repository.ChatRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.util.List;
 
+
 @Service
 public class ChatRoomService {
-
-    @Resource(name = "redisTemplate")
     private HashOperations<String, String, String> hashOpsEnterInfo;
 
     private final ChatRoomRepository chatRoomRepository;
