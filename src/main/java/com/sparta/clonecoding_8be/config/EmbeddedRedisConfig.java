@@ -12,14 +12,17 @@ import javax.annotation.PreDestroy;
 @Configuration
 public class EmbeddedRedisConfig {
 
-    @Value("${spring.redis.port}")
+    @Value("6379")
     private int redisPort;
 
     private RedisServer redisServer;
 
     @PostConstruct
     public void redisServer() {
-        redisServer = new RedisServer(redisPort);
+        redisServer = RedisServer.builder()
+                .port(redisPort)
+                .setting("maxmemory 128M")
+                .build();
         redisServer.start();
     }
 
