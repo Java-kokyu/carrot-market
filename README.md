@@ -4,7 +4,7 @@
 
 ## 🥕 프로젝트명 : 당근마켓 클론 코딩
 
-![당근마켓]()
+![딸꾹마켓]()
 
 <br>
 
@@ -88,11 +88,7 @@
 
 ## 🎬 시연영상
 
-<br/>
-
-https://youtube.com
-<br/>
-<br/>
+# [딸꾹마켓!!](https://www.youtube.com/watch?v=Ddw6nH2uEbU)
 <br/>
 
 ## 📖 ERD 
