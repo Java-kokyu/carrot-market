@@ -168,6 +168,7 @@ ___
 
 - **Front-end Tech Stack**
   <br/>
+  <br>
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
   <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
   <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
@@ -198,6 +199,7 @@ ___
     
 
 - **Back-end Tech Stack**
+
   <br/>
   <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
   <img src="https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot">
@@ -241,4 +243,4 @@ ___
 > 프론트엔드분들과 함께 로그인을 비롯한 CRUD 등 기본적인 기능들과 이후에 쓰게 될 수 있는 무한스크롤의 구현 및 소켓 등 다른 응용 기술들의 시도를 경험할 수 있는 값진 시간이었습니다.
 > 같은 백엔드, 프론트끼리라도 이전에 구현해봤던 기능들의 종류에 따라 프로젝트의 어떤 부분을 맡을 수 있을지 가늠하는 척도가 되었기 때문에 다양한 기능구현의 경험을 쌓아야 하는 이유를 몸소 느꼈습니다.
 > 
-> > ![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&height=210&section=footer)
+> ![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&height=210&section=footer)
