@@ -35,7 +35,6 @@ public class PostService {
 
 
     // Post 저장
-    // Post 저장
     @Transactional
     public PostDetailResponseDto createPosts(List<MultipartFile> multipartFileList, PostRequestDto postRequestDto, String username) throws IOException {
         Member member = memberRepository.findByUsername(username).orElseThrow(
@@ -78,7 +77,7 @@ public class PostService {
 
     private Page<Post> fetchPages(Long lastPostId, int size) {
         PageRequest pageRequest = PageRequest.of(DEFAULT_PAGE_NUM, size);
-        return postRepository.findAllByLastPostId(lastPostId, pageRequest);
+        return postRepository.findById(lastPostId, pageRequest);
     }
 
     // Post 전체
@@ -113,71 +112,6 @@ public class PostService {
         }
         return new GoToPageDto(postResponseDtoList,posts);
     }
-
-
-//     Post 전체조회
-//    @Transactional(readOnly = true)
-//    public List<PostResponseDto> getAllPosts() {
-//        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
-//
-//        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
-//        for (Post post : postList) {
-//            int commentCnt = commentRepository.findAllByPostId(post.getId()).size();
-//            List<String> imagefiles = new ArrayList<>();
-//            List<Imagefile> imagefilesEntity = imagePathRepository.findByPost(post);
-//            for(Imagefile imagefile : imagefilesEntity){
-//                imagefiles.add(imagefile.getImagefile());
-//            }
-//            int likeCnt = likeRepository.findAllByPost(post).size();
-//            postResponseDtoList.add(new PostResponseDto(
-//                    post.getId(),
-//                    post.getMember().getUsername(),
-//                    post.getMember().getNickname(),
-//                    post.getMember().getProfileImage(),
-//                    post.getTitle(),
-//                    post.getPrice(),
-//                    post.getContent(),
-//                    imagefiles,
-//                    post.getAddress(),
-//                    post.getModifiedAt(),
-//                    commentCnt,
-//                    likeCnt
-//            ));
-//        }
-//        return postResponseDtoList;
-//    }
-//
-//    // 전체 매물 조회
-//    @Transactional
-//    public Slice<PostResponseDto> getAllPost(Long page) {
-//        PageRequest pageRequest = PageRequest.of(Math.toIntExact(page), 5, Sort.by(Sort.Direction.DESC, "createdAt"));
-//        Slice<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
-//        Slice<PostResponseDto> postResponseDtoList = new Post
-//        for (Post post : postList) {
-//            int commentCnt = commentRepository.findAllByPostId(post.getId()).size();
-//            List<String> imagefiles = new ArrayList<>();
-//            List<Imagefile> imagefilesEntity = imagePathRepository.findByPost(post);
-//            for(Imagefile imagefile : imagefilesEntity){
-//                imagefiles.add(imagefile.getImagefile());
-//            }
-//            int likeCnt = likeRepository.findAllByPost(post).size();
-//            postResponseDtoList.add(new PostResponseDto(
-//                    post.getId(),
-//                    post.getMember().getUsername(),
-//                    post.getMember().getNickname(),
-//                    post.getMember().getProfileImage(),
-//                    post.getTitle(),
-//                    post.getPrice(),
-//                    post.getContent(),
-//                    imagefiles,
-//                    post.getAddress(),
-//                    post.getModifiedAt(),
-//                    commentCnt,
-//                    likeCnt
-//            ));
-//        }
-//        return postResponseDtoList;
-//    }
 
     @Transactional
     public EditPostResponseDto editPost(Long id, List<MultipartFile> multipartFileList,
